@@ -8,7 +8,7 @@ __author__ = 'korakotlee'
 import os
 import argparse
 from pathlib import Path
-import api
+from pm_api import api
 
 __version__ = "0.1.2"
 
@@ -17,7 +17,6 @@ def cli():
     parser.add_argument('directory')
     args = parser.parse_args()
 
-    print(args.directory)
     path = args.directory
     if os.path.isdir(path):
         api.run(path)

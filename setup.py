@@ -33,6 +33,6 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules'],
     entry_points={
         'console_scripts': [
-            'pm_api = pm_api:cli'
+            'pm-api = pm_api:cli'
         ]},
 )
