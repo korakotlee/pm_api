@@ -61,8 +61,8 @@ def run(path):
                 response = requests.get(url, headers=headers)
             if method.lower() == 'post':
                 response = requests.post(url, data=payload, headers=headers)
-            response_file = os.path.join(path, 'response', str(response.status_code)+ '_'+
-                str(datetime.now().strftime('%Y%m%d_%H%M%S'))+ '_'+ file)
+            response_file = os.path.join(path, 'response', file+'_'+str(response.status_code)+ '_'+
+                str(datetime.now().strftime('%Y%m%d_%H%M%S')))
             with open(response_file, 'w') as f:
                 if response.headers['content-type'].startswith('application/json'):
                     json_data = response.json()
