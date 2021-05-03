@@ -15,8 +15,8 @@ def make_sample_file(path):
             'id': 123,
             'name': 'test'
         },
-        'retry': 3, 
-        'limit': 5, 
+        'retry': 3,
+        'limit': 5,
     }
     with open(os.path.join(path, 'google.json'), 'w') as file:
         json.dump(data, file, indent=4)
@@ -59,12 +59,16 @@ def run(path):
             }, f, indent=4)
         calls = data.get('calls', 0)
         data['calls'] = calls + 1
-        with open(os.path.join(req_file), 'w') as file:
-            json.dump(data, file, indent=4)
+        with open(os.path.join(req_file), 'w') as f:
+            json.dump(data, f, indent=4)
         if response.ok:
             os.rename(req_file, os.path.join(path,'success', file))
+            if data.get('callback_ok', False):
+                requests.post(data['callback_ok'], data=response.text)
         else:
-            if calls >= retry:
+            if data.get('callback_fail', False):
+                requests.post(data['callback_fail'], data=response.text)
+            if data['calls'] >= retry:
                 # last time
                 os.rename(req_file, os.path.join(path,'fail', file))
             time.sleep(1/limit*1.1)
