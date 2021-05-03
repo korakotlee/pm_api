@@ -19,6 +19,7 @@ def cli():
 
     path = args.directory
     if os.path.isdir(path):
+        # api.make_sample_file(path)
         api.run(path)
     else:
         print("\nSorry, the directory does not exist\n")
