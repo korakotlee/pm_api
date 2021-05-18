@@ -24,9 +24,6 @@ The failed requests will be moved to `<input-dir>/fail` directory.
 If the `callback` is specified, the tool will `POST` to the url with the response.
 ### TODO
 
-- for file in files
-    - call until success
-    - save responses
-    - if exist, callback when success
-    - sleep 1/limit * margin
-    - move file to success / fail
+- callback_ok
+- callback_fail
+- mask oauth1 after call success or fail
