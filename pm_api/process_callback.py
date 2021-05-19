@@ -30,7 +30,11 @@ def init(path):
         util.update_data(req_file, data)
 
         if response.ok:
-            os.rename(req_file, os.path.join(path,result, file))
+            if result == 'ok':
+                os.rename(req_file, os.path.join(path,'success', file))
+            else:
+                os.rename(req_file, os.path.join(path,'fail', file))
+
         else:
             if data['callbacks'] >= RETRY:
                 os.rename(req_file, os.path.join(path,result, file))
