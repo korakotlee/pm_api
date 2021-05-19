@@ -12,7 +12,7 @@ with open(os.path.join(HERE, "README.md")) as fid:
 setup(
     name='pm_api',
     packages=['pm_api'],  # this must be the same as the name above
-    version='0.1',
+    version='0.2',
     description='Printed Mint API call',
     # long_description_content_type="text/markdown",
     long_description=README,

@@ -4,7 +4,6 @@ import time
 from datetime import datetime
 import pdb
 import requests
-from requests_oauthlib import OAuth1Session
 from pm_api import util
 
 def init(path):
@@ -24,17 +23,19 @@ def init(path):
         result = data['result']
         callback_url = data.get('callback_'+result)
         print(callback_url)
-        response = requests.post(callback_url, data=data['response'])
+        body = {
+            "jsonrpc": "2.0",
+            "method": "api",
+            "id": 1,
+            "params": data['response']
+        }
+        response = requests.post(callback_url, json=body)
         calls = data.get('callbacks', 0)
         data['callbacks'] = calls + 1
         util.update_data(req_file, data)
 
         if response.ok:
-            if result == 'ok':
-                os.rename(req_file, os.path.join(path,'success', file))
-            else:
-                os.rename(req_file, os.path.join(path,'fail', file))
-
+            os.rename(req_file, os.path.join(path,'success', file))
         else:
             if data['callbacks'] >= RETRY:
-                os.rename(req_file, os.path.join(path,result, file))
+                os.rename(req_file, os.path.join(path,'fail', file))
