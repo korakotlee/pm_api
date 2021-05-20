@@ -1,4 +1,3 @@
-#!/usr/bin/zsh
 if [ -z "$1" ]
 then
   echo "Please sepecify directory"

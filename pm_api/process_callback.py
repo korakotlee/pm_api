@@ -29,13 +29,17 @@ def init(path):
             "id": 1,
             "params": data['response']
         }
-        response = requests.post(callback_url, json=body)
-        calls = data.get('callbacks', 0)
-        data['callbacks'] = calls + 1
-        util.update_data(req_file, data)
+        try:
+            response = requests.post(callback_url, json=body)
+            calls = data.get('callbacks', 0)
+            data['callbacks'] = calls + 1
+            util.update_data(req_file, data)
 
-        if response.ok:
-            os.rename(req_file, os.path.join(path,'success', file))
-        else:
-            if data['callbacks'] >= RETRY:
-                os.rename(req_file, os.path.join(path,'fail', file))
+            if response.ok:
+                os.rename(req_file, os.path.join(path,'success', file))
+            else:
+                if data['callbacks'] >= RETRY:
+                    os.rename(req_file, os.path.join(path,'fail', file))
+        except Exception:
+            pass
+        
