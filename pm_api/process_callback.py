@@ -30,7 +30,7 @@ def init(path):
             "params": data['response']
         }
         try:
-            response = requests.post(callback_url, json=body)
+            response = requests.post(callback_url, json=body, headers={'Content-Type': 'application/json'})
             calls = data.get('callbacks', 0)
             data['callbacks'] = calls + 1
             util.update_data(req_file, data)
