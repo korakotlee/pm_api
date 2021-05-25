@@ -55,7 +55,10 @@ def init(path):
             }, f, indent=4)
         calls = data.get('calls', 0)
         data['calls'] = calls + 1
-        data['response'] = response.json()
+        try:
+            data['response'] = response.json()
+        except Exception as e:
+            data['response'] = response.text
         util.update_data(req_file, data)
         # if there's no callbacks, move to success/ or fail/
 
