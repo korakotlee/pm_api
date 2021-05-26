@@ -76,6 +76,22 @@ def init(path):
                 data['result'] = 'ok'
                 util.update_data(req_file, data)
                 os.rename(req_file, os.path.join(path,'callback', file))
+        elif response.status_code == 403:
+            callback = data.get('callback_403', False)
+            if not callback:
+                os.rename(req_file, os.path.join(path,'fail', file))
+            else:
+                data['result'] = '403'
+                util.update_data(req_file, data)
+                os.rename(req_file, os.path.join(path,'callback', file))
+        elif response.status_code == 404:
+            callback = data.get('callback_404', False)
+            if not callback:
+                os.rename(req_file, os.path.join(path,'fail', file))
+            else:
+                data['result'] = '404'
+                util.update_data(req_file, data)
+                os.rename(req_file, os.path.join(path,'callback', file))
         else:
             if data['calls'] >= retry:
                 # last time
